@@ -1,38 +1,106 @@
-<form action="https://kennel-aerosol-rind.ngrok-free.dev → http://localhost:5678
-" method="POST">
-  <label>Name:</label><input type="text" name="name" required><br>
-  <label>Phone:</label><input type="text" name="phone" required><br>
-  <label>Email:</label><input type="email" name="email"><br>
-  <label>Property Type:</label>
-  <select name="propertyType">
-    <option>Apartment</option>
-    <option>Plot</option>
-    <option>Villa</option>
-    <option>Commercial</option>
-  </select><br>
-  <label>Budget:</label>
-  <select name="budget">
-    <option>₹10–20 lakh</option>
-    <option>₹20–40 lakh</option>
-    <option>₹40–60 lakh</option>
-    <option>₹60–80 lakh</option>
-    <option>₹80 lakh–1 crore</option>
-    <option>Above ₹1 crore</option>
-  </select><br>
-  <button type="submit">Submit</button>
-</form>
-<script>
-document.querySelector("form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  const data = Object.fromEntries(formData.entries());
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Real Estate Lead Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Real Estate Lead Form</h2>
+    <form id="leadForm" 
+          action=" https://kennel-aerosol-rind.ngrok-free.dev -> http://localhost:5678     " 
+          method="POST">
+      <label for="name">Name:</label>
+      <input type="text" name="name" required>
 
-  await fetch(e.target.action, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
+      <label for="phone">Phone:</label>
+      <input type="text" name="phone" required>
 
-  alert("Form submitted successfully!");
-});
-</script>
+      <label for="email">Email:</label>
+      <input type="email" name="email" required>
+
+      <label for="property">Property Type:</label>
+      <select name="property">
+        <option value="Apartment">Apartment</option>
+        <option value="Villa">Villa</option>
+        <option value="Plot">Plot</option>
+      </select>
+
+      <label for="budget">Budget:</label>
+      <input type="text" name="budget">
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    document.querySelector("#leadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch(e.target.action, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          alert("Form submitted successfully!");
+          window.location.href = "thankyou.html"; // optional redirect
+        } else {
+          alert("Error submitting form. Please try again.");
+        }
+      } catch (err) {
+        alert("Network error. Check ngrok and n8n.");
+      }
+    });
+  </script>
+</body>
+</html>
